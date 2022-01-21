@@ -17,7 +17,7 @@ URL = "https://www.google.com/search?q=netflix+jobs&rlz=1C5CHFA_enUS883US883&oq=
 #URL = 'https://www.linkedin.com/jobs/search/?f_TPR=r86400&keywords=google'
 #URL = "https://www.amazon.com/Steve-Madden-Fashion-Sneaker-Fabric/dp/B01LVTT9L7/?_encoding=UTF8&pd_rd_w=YKGKc&pf_rd_p=e3507245-c2c1-4f99-8b1e-89193a9e9975&pf_rd_r=VSCVM8AVB11GQF4ZSC9D&pd_rd_r=6d30e48a-cd24-4538-9c4c-ea38fd6accae&pd_rd_wg=Hz9BV&ref_=pd_gw_bmx_gp_h13jyysn"
 
-headers = {"User-Agent": 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'}
+headers = {}
 
 page = requests.get(URL, headers=headers)
 
