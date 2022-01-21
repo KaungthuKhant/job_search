@@ -9,7 +9,8 @@ print()
 print()
 print()
 
-URL = "https://www.google.com/search?q=meta+software+engineering+new+grad+jobs&rlz=1C5CHFA_enUS883US883&oq=meta+jo&aqs=chrome.0.69i59j69i57j0i512j0i457i512j0i131i433i512j69i60l3&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&sqi=2&ved=2ahUKEwi3hMfT17n1AhXQAYgKHVnWCkgQudcGKAJ6BAgmEC8#fpstate=tldetail&htivrt=jobs&htidocid=qFjOeqC3oy4AAAAAAAAAAA%3D%3D"
+URL = "https://www.google.com/search?q=netflix+jobs&rlz=1C5CHFA_enUS883US883&oq=netflix+j&aqs=chrome.1.69i57j0i433i457i512j0i433i512j0i131i433i512j46i175i199i433i512j0i512j46i433i512j0i512j0i131i433i512j46i512&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&sqi=2&ved=2ahUKEwjZlt-r78H1AhU7QfEDHYmHBpcQudcGKAJ6BAgmEC8#htivrt=jobs&fpstate=tldetail&htichips=date_posted:today&htischips=date_posted;today&htidocid=IcSMkAJ36sQAAAAAAAAAAA%3D%3D"
+#URL = "https://www.google.com/search?q=meta+software+engineering+new+grad+jobs&rlz=1C5CHFA_enUS883US883&oq=meta+jo&aqs=chrome.0.69i59j69i57j0i512j0i457i512j0i131i433i512j69i60l3&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&sqi=2&ved=2ahUKEwi3hMfT17n1AhXQAYgKHVnWCkgQudcGKAJ6BAgmEC8#fpstate=tldetail&htivrt=jobs&htidocid=qFjOeqC3oy4AAAAAAAAAAA%3D%3D"
 #URL = "https://www.google.com/search?q=facebook+jobs&rlz=1C5CHFA_enUS883US883&ei=He7kYaXKOKilytMPm9yHqAU&uact=5&oq=facebook+jobs&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEJECMgsIABCABBCxAxDJAzIFCAAQkQIyBQgAEJECMggIABCxAxCRAjIFCAAQgAQyCAgAEIAEELEDMgUIABCABDIFCAAQgAQyBQgAEIAEOgcIABBHELADOgoIABBHELADEMkDOggIABCSAxCwAzoRCC4QgAQQsQMQgwEQxwEQ0QM6CwguEIAEEMcBEKMCOggIABCxAxCDAToOCC4QgAQQsQMQxwEQowI6EAguELEDEIMBEMcBENEDEEM6BAgAEEM6DgguEIAEELEDEMcBENEDOggILhCxAxCDAToHCAAQyQMQQzoFCAAQkgM6CggAELEDEIMBEEM6CwgAEIAEELEDEIMBSgQIQRgASgQIRhgAUL4HWI8YYNQaaARwAngAgAHKAYgBvgqSAQU1LjYuMZgBAKABAcgBB8ABAQ&sclient=gws-wiz&ibp=htl;jobs&sa=X&ved=2ahUKEwiEkfGY97f1AhWmknIEHWHfDOIQudcGKAJ6BAhGEC8#htivrt=jobs&htidocid=ziv84dK0lUAAAAAAAAAAAA%3D%3D&fpstate=tldetail"
 #URL = "https://www.google.com/search?q=yobo+jobs&rlz=1C5CHFA_enUS883US883&oq=google+j&aqs=chrome.1.69i57j0i433i512l2j0i512j0i433i512j69i60l3&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&sqi=2&ved=2ahUKEwifob-f9Lf1AhWKQ_EDHSBsDosQudcGKAJ6BAgSEC8#htivrt=jobs&fpstate=tldetail&htichips=date_posted:today&htischips=date_posted;today&htidocid=KlPO9gOXvnQAAAAAAAAAAA%3D%3D"
 #URL = "https://stackoverflow.com/questions/56302707/how-can-i-extract-just-the-attribute-title-out-of-this-code"
@@ -22,33 +23,33 @@ page = requests.get(URL, headers=headers)
 
 soup = BeautifulSoup(page.content, 'html.parser')
 
-location = soup.find_all(["div"], text="Meta", class_="vNEEBe", limit=5)
+location = soup.find_all(["div"], text="Netflix", class_="vNEEBe", limit=5)
 jobs = soup.find_all(["div"], class_="BjJfJf PUpOsf", limit=5)
-
+links = soup.find_all(["a"], class_="pMhGee Co68jc j0vryd", limit=5)
 
 print(jobs[0].string)
 print(location[0].string)
 print(location[0].next_sibling.string)
+print(links[0]['href'])
 print()
 
 print(jobs[1].string)
 print(location[1].string)
 print(location[1].next_sibling.string)
+print(links[1]['href'])
 print()
 
 print(jobs[2].string)
 print(location[2].string)
 print(location[2].next_sibling.string)
+print(links[2]['href'])
 print()
 
 print(jobs[3].string)
 print(location[3].string)
 print(location[3].next_sibling.string)
+print(links[3]['href'])
 print()
-
-
-
-
 
 
 '''
