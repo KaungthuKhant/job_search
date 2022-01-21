@@ -2,6 +2,9 @@ import requests
 from requests.api import head
 from bs4 import BeautifulSoup
 
+# TWO PROBLEMS TO TACKLE
+# 1. MAKE AN EXCEL SHEET AND SENT THE EMAIL
+# 2. FIX THE ISSUE OF THE RETURN VALUE NOT BEING THE SAME AS THE WEBSITE
 
 
 print()
