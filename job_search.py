@@ -1,6 +1,7 @@
 import requests
 from requests.api import head
 from bs4 import BeautifulSoup
+import csv
 
 # TWO PROBLEMS TO TACKLE
 # 1. MAKE AN EXCEL SHEET AND SENT THE EMAIL
@@ -26,33 +27,55 @@ page = requests.get(URL, headers=headers)
 
 soup = BeautifulSoup(page.content, 'html.parser')
 
-location = soup.find_all(["div"], text="Netflix", class_="vNEEBe", limit=5)
+company = soup.find_all(["div"], text="Netflix", class_="vNEEBe", limit=5)
 jobs = soup.find_all(["div"], class_="BjJfJf PUpOsf", limit=5)
 links = soup.find_all(["a"], class_="pMhGee Co68jc j0vryd", limit=5)
 
 print(jobs[0].string)
-print(location[0].string)
-print(location[0].next_sibling.string)
+print(company[0].string)
+print(company[0].next_sibling.string)
 print(links[0]['href'])
 print()
 
 print(jobs[1].string)
-print(location[1].string)
-print(location[1].next_sibling.string)
+print(company[1].string)
+print(company[1].next_sibling.string)
 print(links[1]['href'])
 print()
 
 print(jobs[2].string)
-print(location[2].string)
-print(location[2].next_sibling.string)
+print(company[2].string)
+print(company[2].next_sibling.string)
 print(links[2]['href'])
 print()
 
 print(jobs[3].string)
-print(location[3].string)
-print(location[3].next_sibling.string)
+print(company[3].string)
+print(company[3].next_sibling.string)
 print(links[3]['href'])
 print()
+
+
+
+
+
+# WRITING TO A FILE
+file = open('searched_jobs.csv', 'w', encoding = 'utf-8') # encode it right away so that we don't have to do for every input
+writer = csv.writer(file)
+
+# HEADER
+writer.writerow(['Job Title', 'Company Name', 'Location', 'Link to Apply'])
+
+for i in range(4):
+    job = jobs[i].string.strip()
+    companyName = company[i].text
+    location = company[0].next_sibling.string.strip()
+    link = links[3]['href'].strip()
+    #writer.writerow([job.encode('utf-8'), companyName.encode('utf-8'), location.encode('utf-8'), link.encode('utf-8')])
+    writer.writerow([job, companyName, location, link])
+    
+
+file.close()
 
 
 '''
@@ -67,10 +90,10 @@ print(meta_parent)
 
 
 title = soup.find("div", {"class": "vNEEBe"})
-location = soup.find("div", {"class": "Qk80Jf"})
+company = soup.find("div", {"class": "Qk80Jf"})
 
 print(title.get_text())
-print(location.get_text())
+print(company.get_text())
 
 #next = soup.find_next("div", {"class": "vNEEBe"})
 next = soup.find_next("div", {"class", "vNEEBe"})
