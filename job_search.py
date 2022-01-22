@@ -7,13 +7,7 @@ import csv
 # 1. MAKE AN EXCEL SHEET AND SENT THE EMAIL
 # 2. FIX THE ISSUE OF THE RETURN VALUE NOT BEING THE SAME AS THE WEBSITE
 
-
-print()
-print()
-print()
-print()
-
-URL = "https://www.google.com/search?q=netflix+jobs&rlz=1C5CHFA_enUS883US883&oq=netflix+j&aqs=chrome.1.69i57j0i433i457i512j0i433i512j0i131i433i512j46i175i199i433i512j0i512j46i433i512j0i512j0i131i433i512j46i512&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&sqi=2&ved=2ahUKEwjZlt-r78H1AhU7QfEDHYmHBpcQudcGKAJ6BAgmEC8#htivrt=jobs&fpstate=tldetail&htichips=date_posted:today&htischips=date_posted;today&htidocid=IcSMkAJ36sQAAAAAAAAAAA%3D%3D"
+URL = "https://www.google.com/search?q=meta+jobs&rlz=1C5CHFA_enUS883US883&oq=meta+jobs&aqs=chrome.0.69i59j0i512l4j69i60l3.2056j0j9&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&ved=2ahUKEwi4rN3SjMP1AhXmqXIEHaPsBckQudcGKAJ6BAgeEC8#htivrt=jobs&htidocid=9--IosnF90QAAAAAAAAAAA%3D%3D&fpstate=tldetail"
 #URL = "https://www.google.com/search?q=meta+software+engineering+new+grad+jobs&rlz=1C5CHFA_enUS883US883&oq=meta+jo&aqs=chrome.0.69i59j69i57j0i512j0i457i512j0i131i433i512j69i60l3&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&sqi=2&ved=2ahUKEwi3hMfT17n1AhXQAYgKHVnWCkgQudcGKAJ6BAgmEC8#fpstate=tldetail&htivrt=jobs&htidocid=qFjOeqC3oy4AAAAAAAAAAA%3D%3D"
 #URL = "https://www.google.com/search?q=facebook+jobs&rlz=1C5CHFA_enUS883US883&ei=He7kYaXKOKilytMPm9yHqAU&uact=5&oq=facebook+jobs&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEJECMgsIABCABBCxAxDJAzIFCAAQkQIyBQgAEJECMggIABCxAxCRAjIFCAAQgAQyCAgAEIAEELEDMgUIABCABDIFCAAQgAQyBQgAEIAEOgcIABBHELADOgoIABBHELADEMkDOggIABCSAxCwAzoRCC4QgAQQsQMQgwEQxwEQ0QM6CwguEIAEEMcBEKMCOggIABCxAxCDAToOCC4QgAQQsQMQxwEQowI6EAguELEDEIMBEMcBENEDEEM6BAgAEEM6DgguEIAEELEDEMcBENEDOggILhCxAxCDAToHCAAQyQMQQzoFCAAQkgM6CggAELEDEIMBEEM6CwgAEIAEELEDEIMBSgQIQRgASgQIRhgAUL4HWI8YYNQaaARwAngAgAHKAYgBvgqSAQU1LjYuMZgBAKABAcgBB8ABAQ&sclient=gws-wiz&ibp=htl;jobs&sa=X&ved=2ahUKEwiEkfGY97f1AhWmknIEHWHfDOIQudcGKAJ6BAhGEC8#htivrt=jobs&htidocid=ziv84dK0lUAAAAAAAAAAAA%3D%3D&fpstate=tldetail"
 #URL = "https://www.google.com/search?q=yobo+jobs&rlz=1C5CHFA_enUS883US883&oq=google+j&aqs=chrome.1.69i57j0i433i512l2j0i512j0i433i512j69i60l3&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&sqi=2&ved=2ahUKEwifob-f9Lf1AhWKQ_EDHSBsDosQudcGKAJ6BAgSEC8#htivrt=jobs&fpstate=tldetail&htichips=date_posted:today&htischips=date_posted;today&htidocid=KlPO9gOXvnQAAAAAAAAAAA%3D%3D"
@@ -21,7 +15,7 @@ URL = "https://www.google.com/search?q=netflix+jobs&rlz=1C5CHFA_enUS883US883&oq=
 #URL = 'https://www.linkedin.com/jobs/search/?f_TPR=r86400&keywords=google'
 #URL = "https://www.amazon.com/Steve-Madden-Fashion-Sneaker-Fabric/dp/B01LVTT9L7/?_encoding=UTF8&pd_rd_w=YKGKc&pf_rd_p=e3507245-c2c1-4f99-8b1e-89193a9e9975&pf_rd_r=VSCVM8AVB11GQF4ZSC9D&pd_rd_r=6d30e48a-cd24-4538-9c4c-ea38fd6accae&pd_rd_wg=Hz9BV&ref_=pd_gw_bmx_gp_h13jyysn"
 
-headers = {}
+headers = {} # Put your user agent here {user agent}
 
 page = requests.get(URL, headers=headers)
 
@@ -31,6 +25,31 @@ company = soup.find_all(["div"], text="Netflix", class_="vNEEBe", limit=5)
 jobs = soup.find_all(["div"], class_="BjJfJf PUpOsf", limit=5)
 links = soup.find_all(["a"], class_="pMhGee Co68jc j0vryd", limit=5)
 
+
+
+
+
+
+# WRITING TO A FILE
+file = open('searched_jobs.csv', 'w', encoding = 'utf-8') # encode it right away so that we don't have to do for every input
+writer = csv.writer(file)
+
+# HEADER
+writer.writerow(['Job Title', 'Company Name', 'Location', 'Link to Apply'])
+
+for i in range(4):
+    job = jobs[i].string.strip()
+    companyName = company[i].text
+    location = company[0].next_sibling.string.strip()
+    link = links[3]['href'].strip()
+    #writer.writerow([job.encode('utf-8'), companyName.encode('utf-8'), location.encode('utf-8'), link.encode('utf-8')])
+    writer.writerow([job, companyName, location, link])
+    
+
+file.close()
+
+
+'''
 print(jobs[0].string)
 print(company[0].string)
 print(company[0].next_sibling.string)
@@ -57,28 +76,6 @@ print()
 
 
 
-
-
-# WRITING TO A FILE
-file = open('searched_jobs.csv', 'w', encoding = 'utf-8') # encode it right away so that we don't have to do for every input
-writer = csv.writer(file)
-
-# HEADER
-writer.writerow(['Job Title', 'Company Name', 'Location', 'Link to Apply'])
-
-for i in range(4):
-    job = jobs[i].string.strip()
-    companyName = company[i].text
-    location = company[0].next_sibling.string.strip()
-    link = links[3]['href'].strip()
-    #writer.writerow([job.encode('utf-8'), companyName.encode('utf-8'), location.encode('utf-8'), link.encode('utf-8')])
-    writer.writerow([job, companyName, location, link])
-    
-
-file.close()
-
-
-'''
 test = soup.find_all("div", {"class": "vNEEBe"})
 print(test[0])
 print(test)
