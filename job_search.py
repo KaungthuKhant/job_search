@@ -2,12 +2,13 @@ import requests
 from requests.api import head
 from bs4 import BeautifulSoup
 import csv
+import smtplib
 
 # TWO PROBLEMS TO TACKLE
 # 1. MAKE AN EXCEL SHEET AND SENT THE EMAIL
 # 2. FIX THE ISSUE OF THE RETURN VALUE NOT BEING THE SAME AS THE WEBSITE
 
-URL = "https://www.google.com/search?q=meta+jobs&rlz=1C5CHFA_enUS883US883&oq=meta+jobs&aqs=chrome.0.69i59j0i512l4j69i60l3.2056j0j9&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&ved=2ahUKEwi4rN3SjMP1AhXmqXIEHaPsBckQudcGKAJ6BAgeEC8#htivrt=jobs&htidocid=9--IosnF90QAAAAAAAAAAA%3D%3D&fpstate=tldetail"
+URL = "https://www.google.com/search?q=apple+software+engineering+internship&rlz=1C5CHFA_enUS883US883&oq=microsoft+software+engineeri&aqs=chrome.1.69i57j0i512l6j0i457i512j0i512l2&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&sqi=2&ved=2ahUKEwjTiY3MvMn1AhUz8uAKHRZvCqkQudcGKAJ6BAgcECM#fpstate=tldetail&htivrt=jobs&htidocid=XLaohtg-iRcAAAAAAAAAAA%3D%3D"
 #URL = "https://www.google.com/search?q=meta+software+engineering+new+grad+jobs&rlz=1C5CHFA_enUS883US883&oq=meta+jo&aqs=chrome.0.69i59j69i57j0i512j0i457i512j0i131i433i512j69i60l3&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&sqi=2&ved=2ahUKEwi3hMfT17n1AhXQAYgKHVnWCkgQudcGKAJ6BAgmEC8#fpstate=tldetail&htivrt=jobs&htidocid=qFjOeqC3oy4AAAAAAAAAAA%3D%3D"
 #URL = "https://www.google.com/search?q=facebook+jobs&rlz=1C5CHFA_enUS883US883&ei=He7kYaXKOKilytMPm9yHqAU&uact=5&oq=facebook+jobs&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEJECMgsIABCABBCxAxDJAzIFCAAQkQIyBQgAEJECMggIABCxAxCRAjIFCAAQgAQyCAgAEIAEELEDMgUIABCABDIFCAAQgAQyBQgAEIAEOgcIABBHELADOgoIABBHELADEMkDOggIABCSAxCwAzoRCC4QgAQQsQMQgwEQxwEQ0QM6CwguEIAEEMcBEKMCOggIABCxAxCDAToOCC4QgAQQsQMQxwEQowI6EAguELEDEIMBEMcBENEDEEM6BAgAEEM6DgguEIAEELEDEMcBENEDOggILhCxAxCDAToHCAAQyQMQQzoFCAAQkgM6CggAELEDEIMBEEM6CwgAEIAEELEDEIMBSgQIQRgASgQIRhgAUL4HWI8YYNQaaARwAngAgAHKAYgBvgqSAQU1LjYuMZgBAKABAcgBB8ABAQ&sclient=gws-wiz&ibp=htl;jobs&sa=X&ved=2ahUKEwiEkfGY97f1AhWmknIEHWHfDOIQudcGKAJ6BAhGEC8#htivrt=jobs&htidocid=ziv84dK0lUAAAAAAAAAAAA%3D%3D&fpstate=tldetail"
 #URL = "https://www.google.com/search?q=yobo+jobs&rlz=1C5CHFA_enUS883US883&oq=google+j&aqs=chrome.1.69i57j0i433i512l2j0i512j0i433i512j69i60l3&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&sqi=2&ved=2ahUKEwifob-f9Lf1AhWKQ_EDHSBsDosQudcGKAJ6BAgSEC8#htivrt=jobs&fpstate=tldetail&htichips=date_posted:today&htischips=date_posted;today&htidocid=KlPO9gOXvnQAAAAAAAAAAA%3D%3D"
@@ -15,13 +16,13 @@ URL = "https://www.google.com/search?q=meta+jobs&rlz=1C5CHFA_enUS883US883&oq=met
 #URL = 'https://www.linkedin.com/jobs/search/?f_TPR=r86400&keywords=google'
 #URL = "https://www.amazon.com/Steve-Madden-Fashion-Sneaker-Fabric/dp/B01LVTT9L7/?_encoding=UTF8&pd_rd_w=YKGKc&pf_rd_p=e3507245-c2c1-4f99-8b1e-89193a9e9975&pf_rd_r=VSCVM8AVB11GQF4ZSC9D&pd_rd_r=6d30e48a-cd24-4538-9c4c-ea38fd6accae&pd_rd_wg=Hz9BV&ref_=pd_gw_bmx_gp_h13jyysn"
 
-headers = {} # Put your user agent here {user agent}
+headers = {"User-Agent": 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'} # Put your user agent here {user agent}
 
 page = requests.get(URL, headers=headers)
 
 soup = BeautifulSoup(page.content, 'html.parser')
 
-company = soup.find_all(["div"], text="Netflix", class_="vNEEBe", limit=5)
+company = soup.find_all(["div"], text="Apple", class_="vNEEBe", limit=5)
 jobs = soup.find_all(["div"], class_="BjJfJf PUpOsf", limit=5)
 links = soup.find_all(["a"], class_="pMhGee Co68jc j0vryd", limit=5)
 
@@ -47,6 +48,33 @@ for i in range(4):
     
 
 file.close()
+
+if (company[0] != None):
+    send_mail()
+
+
+def send_mail():
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    server.ehlo()
+
+    server.login('maungkaungthukhant@gmail.com', 'password')
+
+    subject = 'Jobs found'
+    body = 'Check the attachment below'
+
+    msg = f"Subject: {subject}\n\n{body}"
+
+    server.sendmail(
+        'maungkaungthukhant@gmail.com',
+        'kaungkhant@go.rmc.edu',
+        msg
+    )
+    print("Email sent")
+
+    server.quit()
+
 
 
 '''
