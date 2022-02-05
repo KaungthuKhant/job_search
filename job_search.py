@@ -28,9 +28,6 @@ links = soup.find_all(["a"], class_="pMhGee Co68jc j0vryd", limit=5)
 
 
 
-
-
-
 # WRITING TO A FILE
 file = open('searched_jobs.csv', 'w', encoding = 'utf-8') # encode it right away so that we don't have to do for every input
 writer = csv.writer(file)
